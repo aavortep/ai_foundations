@@ -100,7 +100,7 @@ def print_board(solution: List[int]) -> None:
     print("\n".join(" ".join(r) for r in board))
 
 if __name__ == "__main__":
-    N = 8
+    N = int(input("Enter the number of queens: "))
     POP_SIZE = 200  # population size
     MUT_RATE = 0.3  # probability for mutation
     TOURN_K = 3  # size of selection for the tournament
