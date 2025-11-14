@@ -4,16 +4,27 @@ import time
 from typing import List, Optional, Tuple
 
 
-# number of attacking queen pairs; perm is a permutation where index=column, value=row
+# number of attacking queen pairs
+# perm is a permutation where index=column, value=row  =>  counting only queens on diagonals
 def energy(perm: List[int]) -> int:
-    n = len(perm)
-    attacks = 0
-    for i in range(n):
-        for j in range(i + 1, n):
-            # if queens are on the same diagonal
-            if abs(perm[i] - perm[j]) == abs(i - j):
-                attacks += 1
-    return attacks
+    diag1 = {}
+    diag2 = {}
+    # count the number of queens on each diagonal
+    for col, row in enumerate(perm):
+        d1 = row + col
+        d2 = row - col
+        diag1[d1] = diag1.get(d1, 0) + 1
+        diag2[d2] = diag2.get(d2, 0) + 1
+
+    # count all possible pairs of diagonal queens
+    def pairs_count(d: dict):
+        s = 0
+        for cnt in d.values():
+            if cnt > 1:
+                s += cnt * (cnt - 1) // 2
+        return s
+
+    return pairs_count(diag1) + pairs_count(diag2)
 
 
 # swap two columns
@@ -21,7 +32,14 @@ def swap_positions(perm: List[int], i: int, j: int) -> None:
     perm[i], perm[j] = perm[j], perm[i]
 
 
-def simulated_annealing_n_queens(n: int, max_iters: int, init_temp: float, alpha: float) -> Tuple[Optional[List[int]], int, dict]:
+def simulated_annealing_n_queens(
+        n: int,
+        max_iters: int,
+        init_temp: float,
+        alpha: float,
+        verbose: bool = True
+        ) -> Tuple[Optional[List[int]], int, dict]:
+    
     # initial random permutation
     perm = list(range(n))
     random.shuffle(perm)
@@ -61,7 +79,8 @@ def simulated_annealing_n_queens(n: int, max_iters: int, init_temp: float, alpha
         if temp < 1e-12:
             temp = 1e-12
 
-        print(f"iter {it:7d} temp {temp:.6e} current_energy {current_energy} best {best_energy}")
+        if verbose:
+            print(f"iter {it:7d} temp {temp:.6e} current_energy {current_energy} best {best_energy}")
 
     end_time = time.time()
     elapsed = end_time - start_time
