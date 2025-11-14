@@ -32,12 +32,12 @@ def swap_positions(perm: List[int], i: int, j: int) -> None:
     perm[i], perm[j] = perm[j], perm[i]
 
 
-def simulated_annealing_n_queens(
+def anneal_solve(
         n: int,
-        max_iters: int,
-        init_temp: float,
-        alpha: float,
-        verbose: bool = True
+        max_iters: int = 200000,
+        init_temp: float = 1.0,
+        alpha: float = 0.9995,
+        verbose: bool = False
         ) -> Tuple[Optional[List[int]], int, dict]:
     
     # initial random permutation
@@ -110,7 +110,7 @@ if __name__ == "__main__":
     init_temp = 1.0  # initial temperature
     alpha = 0.9995  # coefficient for cooling the temperature
 
-    sol, e, stats = simulated_annealing_n_queens(N, max_iters, init_temp, alpha)
+    sol, e, stats = anneal_solve(N, max_iters, init_temp, alpha, True)
 
     if sol is not None:
         print(f"\nSolution for N={N} (energy={e}):")

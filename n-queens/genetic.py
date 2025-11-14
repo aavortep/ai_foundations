@@ -67,9 +67,12 @@ def evolve(pop: List[List[int]], pop_size: int, mutation_rate: float, tournament
     return new_pop
 
 # if solution is not found, the returned value is the best found
-def ga_solve(n: int, pop_size: int, mutation_rate: float,
+def ga_solve(n: int,
+             pop_size: int = 200,
+             mutation_rate: float = 0.3,
              tournament_k: int = 3,
-             max_generations: int = 1000) -> Tuple[List[int], int, int]:
+             max_generations: int = 1000,
+             verbose: bool = False) -> Tuple[List[int], int, int]:
     pop = initial_population(pop_size, n)
     max_fit = n * (n - 1) // 2
     start = time.time()
@@ -78,7 +81,7 @@ def ga_solve(n: int, pop_size: int, mutation_rate: float,
         best_idx = max(range(len(pop)), key=lambda i: fits[i])
         best_fit = fits[best_idx]
         best_ind = pop[best_idx][:]
-        if gen % 50 == 0:
+        if gen % 50 == 0 and verbose:
             print(f"Gen {gen:4d} best fitness {best_fit}/{max_fit}")
         if best_fit == max_fit:
             print(f"SOLVED in generation {gen} (time {time.time()-start:.2f}s)")
@@ -89,7 +92,8 @@ def ga_solve(n: int, pop_size: int, mutation_rate: float,
     best_idx = max(range(len(pop)), key=lambda i: fits[i])
     best_fit = fits[best_idx]
     best_ind = pop[best_idx][:]
-    print(f"Finished {max_generations} generations. Best fitness {best_fit}/{max_fit} (time {time.time()-start:.2f}s)")
+    if verbose:
+        print(f"Finished {max_generations} generations. Best fitness {best_fit}/{max_fit} (time {time.time()-start:.2f}s)")
     return best_ind, max_generations, best_fit
 
 def print_board(solution: List[int]) -> None:
@@ -106,7 +110,7 @@ if __name__ == "__main__":
     TOURN_K = 3  # size of selection for the tournament
     MAX_GEN = 1000  # maximum number of generations
 
-    solution, generation, fit = ga_solve(N, POP_SIZE, MUT_RATE, TOURN_K, MAX_GEN)
+    solution, generation, fit = ga_solve(N, POP_SIZE, MUT_RATE, TOURN_K, MAX_GEN, True)
     print("\nSolution (column:row indices):")
     print(list(enumerate(solution)))
     print("\nBoard:")

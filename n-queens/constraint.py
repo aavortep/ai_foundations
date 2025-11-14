@@ -1,6 +1,6 @@
 from typing import List
 
-def solve_n_queens(n: int) -> List[List[int]]:
+def constraint_solve(n: int) -> List[List[int]]:
     # 1 queen per row, domain is the set of valid columns for each queen
     domains = {row: set(range(n)) for row in range(n)}
     solutions = []
@@ -63,6 +63,6 @@ def print_board(solution: List[int]) -> None:
 
 if __name__ == "__main__":
     n = int(input("Enter the number of queens: "))
-    sols = solve_n_queens(n)
+    sols = constraint_solve(n)
     print("\nFound solution:\n")
     print_board(sols[0])
