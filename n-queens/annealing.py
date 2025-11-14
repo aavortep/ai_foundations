@@ -35,7 +35,7 @@ def simulated_annealing_n_queens(n: int, max_iters: int, init_temp: float, alpha
 
     for it in range(1, max_iters + 1):
         if current_energy == 0:
-            print(f"Found solution at iteration {it}")
+            print(f"Found solution at iteration {it-1}")
             break
 
         # neighbor is a permutation with two swaped columns
