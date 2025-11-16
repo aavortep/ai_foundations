@@ -108,7 +108,7 @@ if __name__ == "__main__":
     POP_SIZE = 200  # population size
     MUT_RATE = 0.3  # probability for mutation
     TOURN_K = 3  # size of selection for the tournament
-    MAX_GEN = 1000  # maximum number of generations
+    MAX_GEN = 2000  # maximum number of generations
 
     solution, generation, fit = ga_solve(N, POP_SIZE, MUT_RATE, TOURN_K, MAX_GEN, True)
     print("\nSolution (column:row indices):")

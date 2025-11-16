@@ -117,4 +117,4 @@ if __name__ == "__main__":
         print_board(sol)
     else:
         print(f"\nNo exact solution found for N={N}. Best energy: {e}")
-        print("\nStats:", stats)
+    print("\nStats:", stats)

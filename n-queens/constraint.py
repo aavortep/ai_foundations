@@ -1,4 +1,6 @@
 from typing import List
+import time
+
 
 def constraint_solve(n: int) -> List[List[int]]:
     # 1 queen per row, domain is the set of valid columns for each queen
@@ -54,6 +56,7 @@ def constraint_solve(n: int) -> List[List[int]]:
     backtrack({}, domains, 0)
     return solutions
 
+
 def print_board(solution: List[int]) -> None:
     n = len(solution)
     board = [["."]*n for _ in range(n)]
@@ -61,8 +64,14 @@ def print_board(solution: List[int]) -> None:
         board[row][col] = "Q"
     print("\n".join(" ".join(r) for r in board))
 
+
 if __name__ == "__main__":
     n = int(input("Enter the number of queens: "))
+
+    start = time.time()
     sols = constraint_solve(n)
+    end = time.time() - start
+
     print("\nFound solution:\n")
     print_board(sols[0])
+    print(f"\nTime: {end} s")
